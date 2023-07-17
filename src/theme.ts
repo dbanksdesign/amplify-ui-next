@@ -100,6 +100,7 @@ const colorPalette: typeof defaultTheme.tokens.colors = {
   },
 }
 
+type ColorKey = 10 | 20 | 40 | 60 | 80 | 90 | 100;
 
 const darkKeys = {
   10: 100,
@@ -115,7 +116,7 @@ const darkPalette = (color: ColorPalette): ColorPalette => {
   return Object.entries(color).reduce((acc, [key, value]) => {
     return {
       ...acc,
-      [darkKeys[key]]: value
+      [darkKeys[(key as unknown as ColorKey)]]: value
     }
   }, {} as ColorPalette)
 }
