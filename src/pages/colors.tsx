@@ -1,6 +1,6 @@
 import { Flex, Text, View, useTheme } from "@aws-amplify/ui-react"
 
-const baseColors = ['red', 'orange', 'yellow', 'green', 'teal', 'blue', 'purple', 'pink'];
+const baseColors = ['red', 'orange', 'yellow', 'green', 'teal', 'blue', 'purple', 'pink', 'neutral'];
 
 
 
@@ -16,7 +16,6 @@ export default function Colors() {
             {Object.keys(colors[color]).map(colorKey => (
               <View flex="1" key={colorKey} width="2rem" height="2rem" backgroundColor={`${color}.${colorKey}`} />
             ))}
-
           </Flex>
         </View>
       ))}

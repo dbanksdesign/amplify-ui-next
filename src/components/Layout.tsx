@@ -6,9 +6,12 @@ import Link from "next/link";
 
 function AppHeader({ children }: React.PropsWithChildren) {
   return (
-    <Flex as="header" direction="row" justifyContent="space-between" alignItems="center" padding="1rem" boxShadow="small" position="sticky" top="0" left="0" width="100%" backgroundColor="background.primary">
-      {children}
-    </Flex>
+    <View as="header" padding="1rem" boxShadow="small" position="sticky" top="0" left="0" width="100%" className="app-header">
+      <View className="app-header-bg" />
+      <Flex direction="row" justifyContent="space-between" alignItems="center">
+        {children}
+      </Flex>
+    </View>
   );
 }
 
@@ -34,6 +37,7 @@ export default function Layout({ children }: React.PropsWithChildren) {
               ]}
             />
           </Link>
+          <Link href="/colors">Colors</Link>
           <CheckboxField
             label="NextGen"
             name="isNextGen"

@@ -1,11 +1,13 @@
-import { Alert, Button, Expander, ExpanderItem, Flex, Menu, MenuItem, SliderField, StepperField, SwitchField, TextField } from "@aws-amplify/ui-react";
+import { Alert, Button, CheckboxField, Expander, ExpanderItem, Flex, Menu, MenuItem, Radio, RadioGroupField, SliderField, StepperField, SwitchField, TabItem, Tabs, Text, TextField, View, useTheme } from "@aws-amplify/ui-react";
 
 
 export default function Home() {
+  const { tokens: { colors } } = useTheme();
   return (
     <Flex direction="column" padding="xxl">
       <Flex direction="row">
         <Button variation="primary">Primary</Button>
+        <Button variation="primary" isDisabled>Primary</Button>
         <Button>Secondary</Button>
         <Button isDisabled>Disabled</Button>
         <Button variation="link">Link</Button>
@@ -44,6 +46,59 @@ export default function Home() {
           label="label"
         />
       </Flex>
+      <Flex direction="row">
+        <CheckboxField
+          label="label"
+          name="label"
+          value="label"
+        />
+        <CheckboxField
+          label="label2"
+          name="label2"
+          value="label2"
+          defaultChecked
+        />
+        <CheckboxField
+          label="label2"
+          name="label2"
+          value="label2"
+          isIndeterminate
+        />
+        <CheckboxField
+          label="label3"
+          name="label3"
+          value="label3"
+          isDisabled
+        />
+        <CheckboxField
+          label="label3"
+          name="label3"
+          value="label3"
+          defaultChecked
+          isDisabled
+        />
+        <CheckboxField
+          label="label3"
+          name="label3"
+          value="label3"
+          isIndeterminate
+          isDisabled
+        />
+      </Flex>
+      <Flex direction="row">
+        <RadioGroupField
+          name="label"
+          label="label"
+        >
+          <Radio value="html">HTML</Radio>
+          <Radio value="html">CSS</Radio>
+          <Radio value="html">Javascript</Radio>
+        </RadioGroupField>
+      </Flex>
+      <Tabs>
+        <TabItem title="Tab 1">Tab 1 Content</TabItem>
+        <TabItem title="Tab 2">Tab 2 Content</TabItem>
+      </Tabs>
       <Menu>
         <MenuItem>Test</MenuItem>
         <MenuItem>Another one</MenuItem>
@@ -68,6 +123,21 @@ export default function Home() {
           Most definitely!
         </ExpanderItem>
       </Expander>
+      <Flex direction="row">
+        <View width="100px" height="100px" backgroundColor="background.primary">
+        </View>
+        <View width="100px" height="100px" backgroundColor="background.secondary" />
+        <View width="100px" height="100px" backgroundColor="background.tertiary">
+        </View>
+        <View width="100px" height="100px" backgroundColor="background.primary" border={`1px solid ${colors.border.primary}`} />
+        <View width="100px" height="100px" backgroundColor="background.primary" border={`1px solid ${colors.border.secondary}`} />
+        <View width="100px" height="100px" backgroundColor="background.primary" border={`1px solid ${colors.border.tertiary}`} />
+      </Flex>
+      <Flex direction="row">
+        <Text fontWeight="bold" color="font.primary">Primary</Text>
+        <Text fontWeight="bold" color="font.secondary">Secondary</Text>
+        <Text fontWeight="bold" color="font.tertiary">Tertiary</Text>
+      </Flex>
     </Flex>
   )
 }

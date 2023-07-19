@@ -95,31 +95,33 @@ const colorPalette: typeof defaultTheme.tokens.colors = {
     50: 'hsla(213, 12%, 54%, 1)',
     60: 'hsla(213, 12%, 43%, 1)',
     80: 'hsla(213, 28%, 19%, 1)',
+    // currently 90 doesn't have a use, it is too close to 100
+    // to have any noticeable difference
     90: 'hsla(213, 47%, 11%, 1)',
     100: 'hsla(221, 100%, 4%, 1)',
   },
 }
 
-type ColorKey = 10 | 20 | 40 | 60 | 80 | 90 | 100;
+// type ColorKey = 10 | 20 | 40 | 60 | 80 | 90 | 100;
 
-const darkKeys = {
-  10: 100,
-  20: 90,
-  40: 80,
-  60: 60,
-  80: 40,
-  90: 20,
-  100: 10
-}
+// const darkKeys = {
+//   10: 100,
+//   20: 90,
+//   40: 80,
+//   60: 60,
+//   80: 40,
+//   90: 20,
+//   100: 10
+// }
 
-const darkPalette = (color: ColorPalette): ColorPalette => {
-  return Object.entries(color).reduce((acc, [key, value]) => {
-    return {
-      ...acc,
-      [darkKeys[(key as unknown as ColorKey)]]: value
-    }
-  }, {} as ColorPalette)
-}
+// const darkPalette = (color: ColorPalette): ColorPalette => {
+//   return Object.entries(color).reduce((acc, [key, value]) => {
+//     return {
+//       ...acc,
+//       [darkKeys[(key as unknown as ColorKey)]]: value
+//     }
+//   }, {} as ColorPalette)
+// }
 
 export const theme: Theme = {
   name: 'amplify-design-system',
@@ -139,6 +141,10 @@ export const theme: Theme = {
       },
 
       background: {
+        secondary: '{colors.neutral.10}',
+        tertiary: '{colors.neutral.20}',
+        disabled: '{colors.background.tertiary}',
+
         success: '{colors.green.10}',
         info: '{colors.blue.10}',
         error: '{colors.red.10}',
@@ -148,7 +154,8 @@ export const theme: Theme = {
         primary: '{colors.neutral.60}',
         secondary: '{colors.neutral.40}',
         tertiary: '{colors.neutral.30}',
-        active: '{colors.brand.primary.80}',
+
+        active: '{colors.brand.primary.60}',
         focus: '{colors.brand.primary.80}',
         // @ts-ignore
         success: '{colors.green.40}',
@@ -158,28 +165,46 @@ export const theme: Theme = {
         error: '{colors.red.40}',
         // @ts-ignore
         warning: '{colors.orange.40}',
+      },
+      font: {
+        secondary: '{colors.neutral.80}',
+        tertiary: '{colors.neutral.60}'
       }
     },
     fonts: {
       default: {
         // Note: this will be for console only
-        static: 'Amazon Ember'
+        static: 'Amazon Ember',
+        // Note: Ember doesn't have a variable font
+        variable: 'Amazon Ember'
       }
     },
     radii: {
       small: '0.375rem'
     },
+    borderWidths: {
+      medium: '1.5px'
+    },
     components: {
       alert: {
-        backgroundColor: '{colors.background.tertiary}',
+        backgroundColor: '{colors.background.secondary}',
         // alert doesn't have border tokens
+      },
+
+      field: {
+        gap: '{space.xxxs}'
+      },
+      fieldmessages: {
+        description: {
+          color: '{colors.font.tertiary}'
+        }
       },
 
       button: {
         borderColor: '{colors.neutral.40}',
         primary: {
-          backgroundColor: '{colors.brand.primary.40}',
-          color: '{colors.brand.primary.100}',
+          backgroundColor: '{colors.brand.primary.20}',
+          color: '{colors.brand.primary.90}',
           borderColor: '{colors.brand.primary.60}',
           _hover: {
             backgroundColor: '{colors.brand.primary.60}',
@@ -203,6 +228,15 @@ export const theme: Theme = {
 
         }
       },
+      radio: {
+        button: {
+          padding: '{borderWidths.large}',
+          borderColor: '{colors.border.secondary}',
+          _checked: {
+            color: ''
+          }
+        }
+      },
       menu: {
         // borderWidth: '0',
         borderColor: '{colors.border.secondary}',
@@ -213,11 +247,12 @@ export const theme: Theme = {
       },
       switchfield: {
         track: {
-          backgroundColor: '{colors.border.tertiary}',
+          backgroundColor: '{colors.border.secondary}',
           padding: '{borderWidths.large}',
-          checked: {
-            backgroundColor: '{colors.border.success}'
-          }
+
+          // checked: {
+          //   backgroundColor: '{colors.border.success}'
+          // }
         },
         thumb: {
           borderColor: '{colors.border.primary}',
@@ -236,23 +271,124 @@ export const theme: Theme = {
           borderWidth: '{borderWidths.small}',
           borderColor: '{colors.border.secondary}'
         }
+      },
+      tabs: {
+        borderWidth: '{borderWidths.small}',
+        borderColor: '{colors.border.secondary}',
+        item: {
+          borderWidth: '{borderWidths.large}',
+          borderColor: 'transparent',
+          color: '{colors.font.tertiary}',
+          _active: {
+            borderColor: '{colors.border.active}'
+          }
+        }
+      },
+      checkbox: {
+        button: {
+          before: {
+            borderColor: '{colors.border.secondary}'
+          }
+        },
+        icon: {
+          backgroundColor: '{colors.font.interactive}',
+          // @ts-ignore
+          _checked: {
+            _disabled: {
+              backgroundColor: '{colors.border.disabled}'
+            }
+          },
+          // @ts-ignore
+          _indeterminate: {
+            _disabled: {
+              backgroundColor: '{colors.border.disabled}'
+            }
+          }
+        }
+      },
+      stepperfield: {
+        button: {
+          _disabled: {
+            backgroundColor: '{colors.background.disabled}'
+          }
+
+        }
       }
     }
   },
   overrides: [
-    defaultDarkModeOverride,
+    // defaultDarkModeOverride,
     {
       colorMode: 'dark',
       tokens: {
+        components: {
+          button: {
+            primary: {
+              backgroundColor: '{colors.brand.primary.40}',
+              borderColor: '{colors.brand.primary.20}',
+              // color: '{colors.brand.primary.20}'
+            }
+          }
+        },
         colors: {
-          red: darkPalette(colorPalette.red),
-          orange: darkPalette(colorPalette.orange),
-          yellow: darkPalette(colorPalette.yellow),
-          green: darkPalette(colorPalette.green),
-          teal: darkPalette(colorPalette.teal),
-          blue: darkPalette(colorPalette.blue),
-          purple: darkPalette(colorPalette.purple),
-          pink: darkPalette(colorPalette.pink),
+          background: {
+            primary: '{colors.neutral.100}',
+            secondary: '{colors.neutral.90}',
+            tertiary: '{colors.neutral.80}',
+
+            success: '{colors.green.100}',
+            info: '{colors.blue.100}',
+            error: '{colors.red.100}',
+            warning: '{colors.orange.100}'
+          },
+          border: {
+            primary: '{colors.neutral.50}',
+            secondary: '{colors.neutral.60}',
+            tertiary: '{colors.neutral.80}',
+            active: '{colors.brand.primary.40}',
+            // @ts-ignore
+            success: '{colors.green.60}',
+            info: '{colors.blue.60}',
+            error: '{colors.red.60}',
+            warning: '{colors.orange.60}'
+          },
+          font: {
+            primary: '{colors.neutral.10}',
+            secondary: '{colors.neutral.20}',
+            tertiary: '{colors.neutral.30}',
+            inverse: '{colors.neutral.100}',
+            interactive: '{colors.brand.primary.40}',
+            // @ts-ignore
+            success: '{colors.green.20}',
+            info: '{colors.blue.20}',
+            error: '{colors.red.20}',
+            warning: '{colors.orange.20}'
+          },
+          // red: darkPalette(colorPalette.red),
+          // orange: darkPalette(colorPalette.orange),
+          // yellow: darkPalette(colorPalette.yellow),
+          // green: darkPalette(colorPalette.green),
+          // teal: darkPalette(colorPalette.teal),
+          // blue: darkPalette(colorPalette.blue),
+          // purple: darkPalette(colorPalette.purple),
+          // pink: darkPalette(colorPalette.pink),
+          // neutral: {
+          //   10: colorPalette.neutral[100],
+          //   20: colorPalette.neutral[90],
+          //   // @ts-ignore
+          //   30: colorPalette.neutral[80],
+          //   40: colorPalette.neutral[60],
+          //   // 50
+          //   60: colorPalette.neutral[40],
+          //   // 70:
+          //   // @ts-ignore
+          //   80: colorPalette.neutral[30],
+          //   90: colorPalette.neutral[20],
+          //   100: colorPalette.neutral[10],
+          // },
+          // background: {
+          //   tertiary: '{colors.neutral.30}'
+          // }
         }
       }
     }

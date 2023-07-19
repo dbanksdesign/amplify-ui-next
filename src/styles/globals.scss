@@ -69,25 +69,92 @@ h6 {
   isolation: isolate;
 }
 
+.app-header {
+  backdrop-filter: blur(4px);
+  z-index: 999;
+  position: relative;
+}
+
+.app-header-bg {
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--amplify-colors-background-primary);
+    opacity: 0.75;
+    pointer-events: none;
+    user-select: none;
+    z-index: -1;
+  }
+}
+
+
 [data-amplify-theme='amplify-design-system'] {
+  .amplify-tabs-item {
+    margin-bottom: 0;
+  }
+  .amplify-input::placeholder {
+    // note: fix this
+    color: var(--amplify-colors-border-secondary);
+  }
+  
+  .amplify-radio__button {
+    &::before {
+      
+    }
+  }
+  
+  .amplify-radio__input:checked + .amplify-radio__button {
+    background-color: var(--amplify-colors-font-interactive);
+    border-color: var(--amplify-colors-font-interactive);
+    &::before {
+      color: var(--amplify-colors-font-inverse);
+    }
+  }
+  
+  // .amplify-tabs-item {
+  //   border-width: 0;
+  //   position: relative;
+  //   margin-bottom: 0;
+  //   &::after {
+  //     content: '';
+  //     position: absolute;
+  //     bottom: -5px; right: 0; left: 0;
+  //     height: 5px;
+  //     border-radius: 99px;
+  //   }
+    
+  //   &[data-state='active']::after {
+  //     background-color: red;
+  //   }
+  // }
+  
   .amplify-alert {
     border: 1px solid var(--amplify-colors-border-secondary);
     border-radius: var(--amplify-radii-small);
   }
   
+  .amplify-alert__icon {
+    color: var(--alert-icon-color);
+  }
+  
   .amplify-alert--success {
+    --alert-icon-color: var(--amplify-colors-green-60);
     border-color: var(--amplify-colors-border-success);
   }
   
   .amplify-alert--warning {
+    --alert-icon-color: var(--amplify-colors-orange-60);
     border-color: var(--amplify-colors-border-warning);
   }
   
   .amplify-alert--error {
+    --alert-icon-color: var(--amplify-colors-red-60);
     border-color: var(--amplify-colors-border-error);
   }
   
   .amplify-alert--info {
+    --alert-icon-color: var(--amplify-colors-blue-60);
     border-color: var(--amplify-colors-border-info);
   }
   
